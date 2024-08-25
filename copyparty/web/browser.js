@@ -4122,6 +4122,7 @@ function sortfiles(nodes) {
 			}
 
 			var onodes = nodes.map(function (x) { return x; });
+			var collator = new Intl.Collator([], {numeric: true});
 			nodes.sort(function (n1, n2) {
 				var v1 = n1._sv,
 					v2 = n2._sv;
@@ -4134,7 +4135,7 @@ function sortfiles(nodes) {
 				}
 				if (v2 === undefined) return 1 * rev;
 
-				var ret = rev * (typ == 'int' ? (v1 - v2) : (v1.localeCompare(v2)));
+				var ret = rev * (typ == 'int' ? (v1 - v2) : collator.compare(v1, v2));
 				if (ret === 0)
 					ret = onodes.indexOf(n1) - onodes.indexOf(n2);
 
